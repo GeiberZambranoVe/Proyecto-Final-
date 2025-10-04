@@ -2,15 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>GameTracker</title>
+  <title>🎮 GameTracker</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Encabezado -->
   <header>
     <h1>🎮 GameTracker</h1>
     <nav>
       <a href="#biblioteca">Biblioteca</a>
       <a href="#reseñas">Reseñas</a>
+      <a href="#comprar">Comprar Juegos</a>
       <a href="#estadisticas">Estadísticas</a>
     </nav>
   </header>
@@ -22,7 +24,8 @@
       <input type="text" id="titulo" placeholder="Título del juego" required>
       <input type="text" id="genero" placeholder="Género">
       <input type="text" id="plataforma" placeholder="Plataforma">
-      <button type="submit">Agregar</button>
+      <input type="number" id="anio" placeholder="Año de lanzamiento">
+      <button type="submit">Agregar a Biblioteca</button>
     </form>
     <div id="lista-juegos" class="grid"></div>
   </section>
@@ -32,15 +35,24 @@
     <h2>Mis Reseñas</h2>
     <form id="form-resena">
       <input type="text" id="juegoResena" placeholder="Juego" required>
+      <input type="number" id="puntuacion" min="1" max="5" placeholder="Puntuación ⭐">
       <textarea id="textoResena" placeholder="Escribe tu reseña..."></textarea>
       <button type="submit">Agregar Reseña</button>
     </form>
-    <div id="lista-resenas"></div>
+    <div id="lista-resenas" class="grid"></div>
+  </section>
+
+  <!-- Comprar Juegos -->
+  <section id="comprar">
+    <h2>Tienda de Juegos</h2>
+    <div class="grid" id="tienda">
+      <!-- juegos se cargan desde JS -->
+    </div>
   </section>
 
   <!-- Estadísticas -->
   <section id="estadisticas">
-    <h2>Estadísticas</h2>
+    <h2>Estadísticas Personales</h2>
     <p id="stats">Juegos: 0 | Reseñas: 0</p>
   </section>
 
