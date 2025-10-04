@@ -1,61 +1,82 @@
+/* Fuente y fondo */
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-  color: white;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: #fff;
 }
 
 header {
   background: rgba(0, 0, 50, 0.9);
   text-align: center;
   padding: 20px;
-  border-bottom: 3px solid cyan;
   position: sticky;
   top: 0;
+  z-index: 1000;
+  border-bottom: 3px solid cyan;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2em;
+  color: cyan;
+  text-shadow: 0 0 10px cyan;
 }
 
 nav a {
   margin: 0 15px;
-  color: cyan;
+  color: #fff;
   text-decoration: none;
   font-weight: bold;
+  transition: 0.3s;
 }
 
 nav a:hover {
+  color: cyan;
+  text-shadow: 0 0 5px cyan;
+}
+
+#hero {
+  text-align: center;
+  padding: 50px 20px;
+  background: url('https://wallpaperaccess.com/full/84248.jpg') center/cover no-repeat;
   color: white;
-  border-bottom: 2px solid cyan;
+  text-shadow: 0 0 10px black;
 }
 
 section {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   margin: 30px auto;
   padding: 20px;
-  border-radius: 12px;
-  max-width: 900px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  border-radius: 15px;
+  max-width: 1000px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
 }
 
 form input, form textarea, form button {
   display: block;
   margin: 10px auto;
-  padding: 10px;
+  padding: 12px;
   width: 80%;
   border-radius: 8px;
   border: none;
+  font-family: inherit;
 }
 
 form button {
-  background: linear-gradient(to right, cyan, deepskyblue);
+  background: linear-gradient(to right, cyan, magenta);
+  color: black;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
 }
 
 form button:hover {
-  background: linear-gradient(to right, deepskyblue, cyan);
-  transform: scale(1.05);
+  transform: scale(1.1);
+  box-shadow: 0 0 15px cyan;
 }
 
+/* Tarjetas */
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -65,13 +86,21 @@ form button:hover {
 
 .card {
   background: rgba(0,0,0,0.7);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 15px;
   width: 220px;
   text-align: center;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 20px cyan;
 }
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+

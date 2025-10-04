@@ -7,7 +7,7 @@ const tiendaJuegos = [
   { titulo: "God of War", precio: 49, imagen: "https://i.imgur.com/NzM9iM0.jpg" }
 ];
 
-// Mostrar juegos de tienda
+// --- Tienda ---
 function cargarTienda(){
   const cont = document.getElementById("tienda");
   cont.innerHTML = "";
@@ -15,9 +15,9 @@ function cargarTienda(){
     const div = document.createElement("div");
     div.className = "card";
     div.innerHTML = `
-      <img src="${j.imagen}" style="width:100%; border-radius:8px;">
+      <img src="${j.imagen}">
       <h3>${j.titulo}</h3>
-      <p>Precio: $${j.precio}</p>
+      <p>💲${j.precio}</p>
       <button onclick="comprar('${j.titulo}')">Comprar</button>
     `;
     cont.appendChild(div);
@@ -26,18 +26,18 @@ function cargarTienda(){
 cargarTienda();
 
 function comprar(nombre){
-  alert(`¡Has comprado ${nombre}!`);
+  alert(`🎉 ¡Has comprado ${nombre}!`);
 }
 
-// Formulario de juegos
+// --- Biblioteca ---
 document.getElementById("form-juego").addEventListener("submit", (e)=>{
   e.preventDefault();
   const titulo = document.getElementById("titulo").value;
   const genero = document.getElementById("genero").value;
   const plataforma = document.getElementById("plataforma").value;
-  const anio = document.getElementById("anio").value;
+  const imagen = document.getElementById("imagen").value || "https://i.imgur.com/uP9GZzU.png";
 
-  const juego = { titulo, genero, plataforma, anio };
+  const juego = { titulo, genero, plataforma, imagen };
   juegos.push(juego);
 
   mostrarJuegos();
@@ -53,15 +53,15 @@ function mostrarJuegos(){
     const div = document.createElement("div");
     div.className = "card";
     div.innerHTML = `
+      <img src="${j.imagen}">
       <h3>${j.titulo}</h3>
       <p>${j.genero} - ${j.plataforma}</p>
-      <small>Año: ${j.anio}</small>
     `;
     cont.appendChild(div);
   });
 }
 
-// Formulario reseñas
+// --- Reseñas ---
 document.getElementById("form-resena").addEventListener("submit", (e)=>{
   e.preventDefault();
   const juego = document.getElementById("juegoResena").value;
@@ -92,7 +92,7 @@ function mostrarResenas(){
   });
 }
 
-// Estadísticas
+// --- Estadísticas ---
 function actualizarStats(){
   document.getElementById("stats").textContent = 
     `Juegos: ${juegos.length} | Reseñas: ${resenas.length}`;
