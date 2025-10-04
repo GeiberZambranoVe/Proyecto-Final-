@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GameTracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🎮 GameTracker</h1>
+    <nav>
+      <a href="#biblioteca">Biblioteca</a>
+      <a href="#reseñas">Reseñas</a>
+      <a href="#estadisticas">Estadísticas</a>
+    </nav>
+  </header>
+
+  <!-- Biblioteca -->
+  <section id="biblioteca">
+    <h2>Mi Biblioteca de Juegos</h2>
+    <form id="form-juego">
+      <input type="text" id="titulo" placeholder="Título del juego" required>
+      <input type="text" id="genero" placeholder="Género">
+      <input type="text" id="plataforma" placeholder="Plataforma">
+      <button type="submit">Agregar</button>
+    </form>
+    <div id="lista-juegos" class="grid"></div>
+  </section>
+
+  <!-- Reseñas -->
+  <section id="reseñas">
+    <h2>Mis Reseñas</h2>
+    <form id="form-resena">
+      <input type="text" id="juegoResena" placeholder="Juego" required>
+      <textarea id="textoResena" placeholder="Escribe tu reseña..."></textarea>
+      <button type="submit">Agregar Reseña</button>
+    </form>
+    <div id="lista-resenas"></div>
+  </section>
+
+  <!-- Estadísticas -->
+  <section id="estadisticas">
+    <h2>Estadísticas</h2>
+    <p id="stats">Juegos: 0 | Reseñas: 0</p>
+  </section>
+
+  <footer>
+    <p>Proyecto Final - GameTracker</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
