@@ -1,106 +1,108 @@
-/* Fuente y fondo */
+:root{
+  --bg1: #0f0c29;
+  --bg2: #302b63;
+  --bg3: #24243e;
+  --neon: #00f0ff;
+  --accent: #9b59ff;
+  --glass: rgba(255,255,255,0.04);
+  --card: rgba(0,0,0,0.75);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
 body {
   margin: 0;
-  font-family: 'Orbitron', sans-serif;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  color: #fff;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+  color: #eaeef6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-header {
-  background: rgba(0, 0, 50, 0.9);
-  text-align: center;
-  padding: 20px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  border-bottom: 3px solid cyan;
+/* Header */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 28px;
+  background: rgba(0,0,0,0.35);
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  position:sticky;
+  top:0;
+  z-index:1000;
+  backdrop-filter: blur(6px);
 }
+.brand{display:flex; align-items:center; gap:12px}
+.logo{width:44px; height:44px; border-radius:8px; box-shadow:0 6px 18px rgba(0,240,255,0.12)}
+header h1{margin:0; font-family:'Orbitron',sans-serif; color:var(--neon); letter-spacing:1px}
+nav a{margin-left:16px; color:#dfe9f3; text-decoration:none; font-weight:600; transition:all .18s}
+nav a:hover{color:var(--neon); text-shadow:0 0 8px rgba(0,240,255,0.18)}
 
-header h1 {
-  margin: 0;
-  font-size: 2em;
-  color: cyan;
-  text-shadow: 0 0 10px cyan;
+/* Hero */
+#hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:56px 16px;
+  background-image: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));
+  background-blend-mode: overlay;
 }
+.hero-inner h2{margin:0; font-size:36px; color:var(--neon); text-shadow:0 0 18px rgba(0,240,255,0.12)}
+.hero-inner p{opacity:0.9; margin-top:8px}
 
-nav a {
-  margin: 0 15px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
+/* Layout sections */
+main{max-width:1220px; margin:18px auto; padding:0 16px}
+section{background:var(--glass); margin:18px 0; padding:18px; border-radius:12px; box-shadow: 0 6px 30px rgba(0,0,0,0.6)}
+
+/* Genre headings */
+.genre-block h3{margin:8px 0; color:var(--accent)}
+
+/* Grid & Cards */
+.grid{display:flex; flex-wrap:wrap; gap:16px; justify-content:flex-start}
+.card{
+  width:200px;
+  background:var(--card);
+  border-radius:12px;
+  overflow:hidden;
+  transition: transform .18s, box-shadow .18s;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  display:flex; flex-direction:column; align-items:stretch;
 }
-
-nav a:hover {
-  color: cyan;
-  text-shadow: 0 0 5px cyan;
+.card img{width:100%; height:120px; object-fit:cover; display:block}
+.card .card-body{padding:12px; flex:1}
+.card h3{margin:0 0 6px; font-size:16px}
+.card p{margin:0 0 8px; font-size:13px; color:#cfe9ff}
+.card .card-actions{display:flex; gap:8px; padding:0 12px 12px}
+.card button{
+  flex:1;
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+  transition:transform .12s, box-shadow .12s;
 }
+.card button:hover{transform:translateY(-3px)}
+.btn-primary{background:linear-gradient(90deg,var(--neon),var(--accent)); color:#001}
+.btn-ghost{background:rgba(255,255,255,0.06); color:#e9faff}
 
-#hero {
-  text-align: center;
-  padding: 50px 20px;
-  background: url('https://wallpaperaccess.com/full/84248.jpg') center/cover no-repeat;
-  color: white;
-  text-shadow: 0 0 10px black;
+/* Forms / general buttons */
+.primary{background:linear-gradient(90deg,var(--neon),var(--accent)); color:#001; border:none; padding:10px 16px; border-radius:10px; cursor:pointer}
+.primary:hover{box-shadow:0 8px 30px rgba(155,89,255,0.12)}
+
+/* Modal */
+.modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:2000; align-items:center; justify-content:center}
+.modal-content{width:90%; max-width:900px; background: linear-gradient(180deg, rgba(12,12,25,0.95), rgba(16,16,30,0.98)); padding:18px; border-radius:12px; color:#fff; box-shadow:0 12px 40px rgba(0,0,0,0.8)}
+.close-btn{background:transparent; border:none; color:#fff; font-size:26px; float:right; cursor:pointer}
+
+/* Responsive */
+@media (max-width:900px){
+  .card{width:46%}
 }
-
-section {
-  background: rgba(255, 255, 255, 0.05);
-  margin: 30px auto;
-  padding: 20px;
-  border-radius: 15px;
-  max-width: 1000px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+@media (max-width:560px){
+  nav{display:none}
+  .card{width:100%}
+  header{padding:12px}
+  .hero-inner h2{font-size:24px}
 }
-
-form input, form textarea, form button {
-  display: block;
-  margin: 10px auto;
-  padding: 12px;
-  width: 80%;
-  border-radius: 8px;
-  border: none;
-  font-family: inherit;
-}
-
-form button {
-  background: linear-gradient(to right, cyan, magenta);
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-form button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 15px cyan;
-}
-
-/* Tarjetas */
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.card {
-  background: rgba(0,0,0,0.7);
-  border-radius: 12px;
-  padding: 15px;
-  width: 220px;
-  text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px cyan;
-}
-
-.card img {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-

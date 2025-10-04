@@ -1,70 +1,113 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>🎮 GameTracker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VeGames</title>
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <!-- Header -->
   <header>
-    <h1>🎮 GameTracker</h1>
+    <div class="brand">
+      <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="VeGames logo" class="logo">
+      <h1>VeGames</h1>
+    </div>
     <nav>
+      <a href="#explorar">Explorar</a>
       <a href="#biblioteca">Biblioteca</a>
       <a href="#reseñas">Reseñas</a>
-      <a href="#comprar">Tienda</a>
+      <a href="#carrito">Carrito 🛒 <span id="carrito-count">0</span></a>
       <a href="#estadisticas">Estadísticas</a>
     </nav>
   </header>
 
-  <!-- Hero principal -->
+  <!-- Hero -->
   <section id="hero">
-    <h2>Organiza tu mundo gamer</h2>
-    <p>Biblioteca, reseñas y estadísticas en un solo lugar</p>
+    <div class="hero-inner">
+      <h2>Tu portal gamer futurista</h2>
+      <p>Explora, compra y reseña tus videojuegos favoritos en VeGames</p>
+    </div>
   </section>
 
-  <!-- Biblioteca -->
-  <section id="biblioteca">
-    <h2>📚 Mi Biblioteca</h2>
-    <form id="form-juego">
-      <input type="text" id="titulo" placeholder="Título del juego" required>
-      <input type="text" id="genero" placeholder="Género">
-      <input type="text" id="plataforma" placeholder="Plataforma">
-      <input type="text" id="imagen" placeholder="URL de portada">
-      <button type="submit">Agregar Juego</button>
-    </form>
-    <div id="lista-juegos" class="grid"></div>
-  </section>
+  <!-- Explorar -->
+  <main>
+    <section id="explorar">
+      <h2>🕹️ Explorar Juegos</h2>
 
-  <!-- Reseñas -->
-  <section id="reseñas">
-    <h2>✍ Mis Reseñas</h2>
-    <form id="form-resena">
-      <input type="text" id="juegoResena" placeholder="Juego" required>
-      <input type="number" id="puntuacion" min="1" max="5" placeholder="⭐ Puntuación">
-      <textarea id="textoResena" placeholder="Escribe tu reseña..."></textarea>
-      <button type="submit">Publicar</button>
-    </form>
-    <div id="lista-resenas" class="grid"></div>
-  </section>
+      <div class="genre-block">
+        <h3>🎃 Terror</h3>
+        <div id="terror" class="grid"></div>
+      </div>
 
-  <!-- Tienda -->
-  <section id="comprar">
-    <h2>🛒 Tienda de Juegos</h2>
-    <div class="grid" id="tienda"></div>
-  </section>
+      <div class="genre-block">
+        <h3>⚔️ Acción</h3>
+        <div id="accion" class="grid"></div>
+      </div>
 
-  <!-- Estadísticas -->
-  <section id="estadisticas">
-    <h2>📊 Estadísticas</h2>
-    <p id="stats">Juegos: 0 | Reseñas: 0</p>
-  </section>
+      <div class="genre-block">
+        <h3>🎯 Simulación</h3>
+        <div id="simulacion" class="grid"></div>
+      </div>
+
+      <div class="genre-block">
+        <h3>🧙 RPG</h3>
+        <div id="rpg" class="grid"></div>
+      </div>
+
+      <div class="genre-block">
+        <h3>⚽ Deportes</h3>
+        <div id="deportes" class="grid"></div>
+      </div>
+
+      <div class="genre-block">
+        <h3>🔫 Shooter / Multiplayer</h3>
+        <div id="shooter" class="grid"></div>
+      </div>
+    </section>
+
+    <!-- Biblioteca -->
+    <section id="biblioteca">
+      <h2>📚 Mi Biblioteca</h2>
+      <div id="lista-juegos" class="grid"></div>
+    </section>
+
+    <!-- Reseñas (panel general, pero cada juego tiene sus reseñas en modal) -->
+    <section id="reseñas">
+      <h2>⭐ Reseñas recientes</h2>
+      <div id="lista-resenas" class="grid"></div>
+    </section>
+
+    <!-- Carrito -->
+    <section id="carrito">
+      <h2>🛒 Mi Carrito</h2>
+      <div id="lista-carrito" class="grid"></div>
+      <p id="total">Total: $0</p>
+      <button id="comprar-btn" class="primary">Finalizar Compra</button>
+    </section>
+
+    <!-- Estadísticas -->
+    <section id="estadisticas">
+      <h2>📊 Estadísticas</h2>
+      <p id="stats">Juegos en biblioteca: 0 | Reseñas: 0 | Compras realizadas: 0</p>
+    </section>
+  </main>
 
   <footer>
-    <p>Proyecto Final - GameTracker</p>
+    <p>© 2025 VeGames</p>
   </footer>
 
+  <!-- Modal de detalle de juego -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button id="cerrarModal" class="close-btn" aria-label="Cerrar">&times;</button>
+      <div id="detalle-juego"></div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
