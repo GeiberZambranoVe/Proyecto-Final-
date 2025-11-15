@@ -1,15 +1,15 @@
 :root {
-  /* Paleta 8-Bit Aventura (Inspirado en Mario) */
-  --bg-dark: #222; /* Negro Base */
-  --bg-medium: #333; /* Fondo de secciones más claro */
-  --mario-red: #d32f2f; /* Rojo Principal */
-  --mario-yellow: #ffeb3b; /* Amarillo Brillante (Acento) */
-  --mario-green: #4caf50; /* Verde de Vida/Botones */
+  /* Paleta 8-Bit Clásico (Más genérica) */
+  --bg-dark: #1a1a1a; /* Negro Carbón más profundo */
+  --bg-medium: #2a2a2a; /* Fondo de secciones más claro */
+  --main-red: #e74c3c; /* Rojo Clásico */
+  --main-yellow: #f1c40f; /* Amarillo de advertencia/acentos */
+  --main-green: #2ecc71; /* Verde de "ok" / éxito */
   --text-light: #ffffff;
-  --text-muted: #bbb;
-  --card-bg: #444;
-  --shadow-retro: 3px 3px 0px var(--mario-yellow), 6px 6px 0px #000;
-  --border-block: 4px solid var(--mario-red);
+  --text-muted: #aaaaaa;
+  --card-bg: #333;
+  --shadow-retro: 3px 3px 0px var(--main-yellow), 6px 6px 0px #000;
+  --border-block: 4px solid var(--main-red);
 }
 
 /* Tipografía */
@@ -30,11 +30,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  /* Fondo de Super Mario Bros. (Se asume una imagen disponible) */
-  background-image: url('https://i.imgur.com/u7q10eQ.png'); /* Ejemplo de imagen de Super Mario 3 */
+  /* FONDO NEUTRAL: Eliminado Mario Bros. - Añadido patrón sutil de puntos/píxeles */
+  background-image: radial-gradient(#333 1px, transparent 1px);
+  background-size: 8px 8px;
   background-attachment: fixed;
-  background-position: center bottom;
-  background-size: cover;
 }
 
 h1,
@@ -42,7 +41,7 @@ h2,
 h3 {
   font-family: 'Press Start 2P', cursive;
   text-shadow: 2px 2px 0px #000;
-  color: var(--mario-yellow);
+  color: var(--main-yellow); /* Títulos en amarillo */
 }
 
 /* --- SPLASH SCREEN (PRESENTACIÓN) --- */
@@ -63,8 +62,8 @@ h3 {
 
 .splash-title {
   font-size: 5vw; /* Tamaño responsivo */
-  color: var(--mario-red);
-  text-shadow: 6px 6px 0px var(--mario-yellow);
+  color: var(--main-red);
+  text-shadow: 6px 6px 0px var(--main-yellow);
   animation: pulse 1s infinite alternate;
   margin-bottom: 50px;
 }
@@ -73,8 +72,8 @@ h3 {
   width: 300px;
   height: 20px;
   background: var(--bg-medium);
-  border: 3px solid var(--mario-yellow);
-  box-shadow: 3px 3px 0px var(--mario-red);
+  border: 3px solid var(--main-yellow);
+  box-shadow: 3px 3px 0px var(--main-red);
   position: relative;
   overflow: hidden;
 }
@@ -86,7 +85,7 @@ h3 {
   left: 0;
   width: 0;
   height: 100%;
-  background: var(--mario-green);
+  background: var(--main-green);
   animation: loading 2.5s ease-out forwards;
 }
 
@@ -105,27 +104,39 @@ h3 {
 
 /* Header */
 header {
-  /* ... (Estilos del header similares, pero usando nueva paleta) ... */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 14px 28px;
-  background: rgba(34, 34, 34, 0.9); /* Semi-transparente oscuro */
-  border-bottom: 2px solid var(--mario-red);
+  background: rgba(26, 26, 26, 0.9); /* Semi-transparente oscuro */
+  border-bottom: 2px solid var(--main-red);
   position: sticky;
   top: 0;
   z-index: 1000;
   backdrop-filter: blur(4px);
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 4px; /* Un poco más cuadrado para retro */
+  box-shadow: 0 0 8px var(--main-red);
+}
+
 header h1 {
   font-size: 16px;
-  color: var(--mario-red);
-  text-shadow: 2px 2px 0px var(--mario-yellow);
+  color: var(--main-red);
+  text-shadow: 2px 2px 0px var(--main-yellow);
 }
 
 nav a {
-  color: var(--mario-yellow);
+  color: var(--main-yellow);
   text-decoration: none;
   font-weight: 600;
   padding: 6px 4px;
@@ -135,21 +146,20 @@ nav a {
 
 nav a:hover {
   color: var(--text-light);
-  border-bottom: 2px solid var(--mario-green);
+  border-bottom: 2px solid var(--main-green);
 }
 
 /* Hero */
 #hero {
   padding: 60px 16px;
-  /* Fondo oscuro y semi-transparente para hacer el texto legible */
-  background: rgba(0, 0, 0, 0.6); 
-  border-bottom: 4px solid var(--mario-green);
+  background: rgba(0, 0, 0, 0.7); /* Fondo oscuro y semi-transparente para hacer el texto legible */
+  border-bottom: 4px solid var(--main-green);
 }
 
 .hero-inner h2 {
   font-size: 20px;
-  color: var(--mario-yellow);
-  text-shadow: 2px 2px 0px var(--mario-red);
+  color: var(--main-yellow);
+  text-shadow: 2px 2px 0px var(--main-red);
 }
 
 .hero-inner p {
@@ -176,8 +186,8 @@ section {
 
 section h2 {
   font-size: 18px;
-  color: var(--mario-red);
-  border-bottom: 2px dashed var(--mario-yellow);
+  color: var(--main-red);
+  border-bottom: 2px dashed var(--main-yellow);
   padding-bottom: 10px;
   margin-bottom: 25px;
   text-align: center;
@@ -196,15 +206,15 @@ section h2 {
   background: var(--card-bg);
   border-radius: 4px;
   overflow: hidden;
-  border: 2px solid var(--mario-green);
+  border: 2px solid var(--main-green);
   transition: transform .2s, box-shadow .2s;
-  box-shadow: 3px 3px 0px var(--mario-red);
-  cursor: pointer; /* IMPORTANTE: Cursor de puntero para indicar click */
+  box-shadow: 3px 3px 0px var(--main-red);
+  cursor: pointer;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 6px 6px 0px var(--mario-yellow);
+  box-shadow: 6px 6px 0px var(--main-yellow);
 }
 
 .card img {
@@ -212,7 +222,7 @@ section h2 {
   height: 140px;
   object-fit: cover;
   display: block;
-  border-bottom: 2px solid var(--mario-red);
+  border-bottom: 2px solid var(--main-red);
 }
 
 .card .card-body {
@@ -222,7 +232,7 @@ section h2 {
 
 .card h3 {
   font-size: 14px;
-  color: var(--mario-yellow);
+  color: var(--main-yellow);
   text-shadow: none;
 }
 
@@ -243,28 +253,28 @@ section h2 {
 
 .btn-primary,
 .primary {
-  background: var(--mario-red);
+  background: var(--main-red);
   color: var(--text-light);
 }
 
 .btn-primary:hover,
 .primary:hover {
-  background: var(--mario-yellow);
+  background: var(--main-yellow);
   color: var(--bg-dark);
-  box-shadow: 2px 2px 0 var(--mario-red), 4px 4px 0 #000;
+  box-shadow: 2px 2px 0 var(--main-red), 4px 4px 0 #000;
   transform: translate(-2px, -2px);
 }
 
 .btn-ghost {
   background: var(--bg-medium);
-  color: var(--mario-green);
-  border: 2px solid var(--mario-green);
+  color: var(--main-green);
+  border: 2px solid var(--main-green);
 }
 
 .btn-ghost:hover {
   background: #000;
-  color: var(--mario-yellow);
-  border-color: var(--mario-yellow);
+  color: var(--main-yellow);
+  border-color: var(--main-yellow);
 }
 
 /* Modal */
@@ -272,18 +282,18 @@ section h2 {
   background: var(--bg-medium);
   padding: 30px;
   border-radius: 4px;
-  border: 4px solid var(--mario-red);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 10px var(--mario-yellow);
+  border: 4px solid var(--main-red);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 10px var(--main-yellow);
 }
 
 .close-btn {
-  background: var(--mario-yellow);
+  background: var(--main-yellow);
   color: var(--bg-dark);
   border: 2px solid #000;
   box-shadow: -3px 3px 0 #000;
 }
 .close-btn:hover {
-  background: var(--mario-green);
+  background: var(--main-green);
   color: var(--bg-dark);
 }
 
@@ -293,8 +303,8 @@ input[type="number"],
 select,
 textarea {
   background-color: var(--bg-dark) !important;
-  border: 2px solid var(--mario-red) !important;
-  color: var(--mario-yellow) !important;
+  border: 2px solid var(--main-red) !important;
+  color: var(--main-yellow) !important;
   font-family: "IBM Plex Mono", monospace !important;
   text-transform: uppercase;
 }
@@ -302,7 +312,7 @@ input[type="text"]:focus,
 input[type="number"]:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--mario-green) !important;
+  border-color: var(--main-green) !important;
 }
 ::placeholder {
   color: var(--text-muted);
@@ -312,8 +322,8 @@ footer {
   text-align: center;
   padding: 20px;
   margin-top: 30px;
-  background-color: rgba(34, 34, 34, 0.9);
-  border-top: 2px solid var(--mario-red);
+  background-color: rgba(26, 26, 26, 0.9);
+  border-top: 2px solid var(--main-red);
   color: var(--text-muted);
   font-size: 14px;
 }
