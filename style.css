@@ -1,108 +1,319 @@
-:root{
-  --bg1: #0f0c29;
-  --bg2: #302b63;
-  --bg3: #24243e;
-  --neon: #00f0ff;
-  --accent: #9b59ff;
-  --glass: rgba(255,255,255,0.04);
-  --card: rgba(0,0,0,0.75);
+:root {
+  /* Paleta 8-Bit Aventura (Inspirado en Mario) */
+  --bg-dark: #222; /* Negro Base */
+  --bg-medium: #333; /* Fondo de secciones más claro */
+  --mario-red: #d32f2f; /* Rojo Principal */
+  --mario-yellow: #ffeb3b; /* Amarillo Brillante (Acento) */
+  --mario-green: #4caf50; /* Verde de Vida/Botones */
+  --text-light: #ffffff;
+  --text-muted: #bbb;
+  --card-bg: #444;
+  --shadow-retro: 3px 3px 0px var(--mario-yellow), 6px 6px 0px #000;
+  --border-block: 4px solid var(--mario-red);
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
+/* Tipografía */
+* {
+  box-sizing: border-box
+}
+
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
-  color: #eaeef6;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+  font-family: "IBM Plex Mono", monospace;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Fondo de Super Mario Bros. (Se asume una imagen disponible) */
+  background-image: url('https://i.imgur.com/u7q10eQ.png'); /* Ejemplo de imagen de Super Mario 3 */
+  background-attachment: fixed;
+  background-position: center bottom;
+  background-size: cover;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Press Start 2P', cursive;
+  text-shadow: 2px 2px 0px #000;
+  color: var(--mario-yellow);
+}
+
+/* --- SPLASH SCREEN (PRESENTACIÓN) --- */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-dark);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.splash-title {
+  font-size: 5vw; /* Tamaño responsivo */
+  color: var(--mario-red);
+  text-shadow: 6px 6px 0px var(--mario-yellow);
+  animation: pulse 1s infinite alternate;
+  margin-bottom: 50px;
+}
+
+.loading-bar {
+  width: 300px;
+  height: 20px;
+  background: var(--bg-medium);
+  border: 3px solid var(--mario-yellow);
+  box-shadow: 3px 3px 0px var(--mario-red);
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: var(--mario-green);
+  animation: loading 2.5s ease-out forwards;
+}
+
+.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.05); opacity: 0.9; }
+}
+@keyframes loading {
+  to { width: 100%; }
 }
 
 /* Header */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px 28px;
-  background: rgba(0,0,0,0.35);
-  border-bottom:1px solid rgba(255,255,255,0.04);
-  position:sticky;
-  top:0;
-  z-index:1000;
-  backdrop-filter: blur(6px);
+header {
+  /* ... (Estilos del header similares, pero usando nueva paleta) ... */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  background: rgba(34, 34, 34, 0.9); /* Semi-transparente oscuro */
+  border-bottom: 2px solid var(--mario-red);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
 }
-.brand{display:flex; align-items:center; gap:12px}
-.logo{width:44px; height:44px; border-radius:8px; box-shadow:0 6px 18px rgba(0,240,255,0.12)}
-header h1{margin:0; font-family:'Orbitron',sans-serif; color:var(--neon); letter-spacing:1px}
-nav a{margin-left:16px; color:#dfe9f3; text-decoration:none; font-weight:600; transition:all .18s}
-nav a:hover{color:var(--neon); text-shadow:0 0 8px rgba(0,240,255,0.18)}
+
+header h1 {
+  font-size: 16px;
+  color: var(--mario-red);
+  text-shadow: 2px 2px 0px var(--mario-yellow);
+}
+
+nav a {
+  color: var(--mario-yellow);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 4px;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+}
+
+nav a:hover {
+  color: var(--text-light);
+  border-bottom: 2px solid var(--mario-green);
+}
 
 /* Hero */
-#hero{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:56px 16px;
-  background-image: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));
-  background-blend-mode: overlay;
+#hero {
+  padding: 60px 16px;
+  /* Fondo oscuro y semi-transparente para hacer el texto legible */
+  background: rgba(0, 0, 0, 0.6); 
+  border-bottom: 4px solid var(--mario-green);
 }
-.hero-inner h2{margin:0; font-size:36px; color:var(--neon); text-shadow:0 0 18px rgba(0,240,255,0.12)}
-.hero-inner p{opacity:0.9; margin-top:8px}
+
+.hero-inner h2 {
+  font-size: 20px;
+  color: var(--mario-yellow);
+  text-shadow: 2px 2px 0px var(--mario-red);
+}
+
+.hero-inner p {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 16px;
+  color: var(--text-light);
+}
 
 /* Layout sections */
-main{max-width:1220px; margin:18px auto; padding:0 16px}
-section{background:var(--glass); margin:18px 0; padding:18px; border-radius:12px; box-shadow: 0 6px 30px rgba(0,0,0,0.6)}
+main {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px
+}
 
-/* Genre headings */
-.genre-block h3{margin:8px 0; color:var(--accent)}
+section {
+  background: var(--bg-medium);
+  margin: 30px 0;
+  padding: 30px;
+  border-radius: 4px;
+  border: var(--border-block);
+  box-shadow: var(--shadow-retro);
+}
+
+section h2 {
+  font-size: 18px;
+  color: var(--mario-red);
+  border-bottom: 2px dashed var(--mario-yellow);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  text-align: center;
+}
 
 /* Grid & Cards */
-.grid{display:flex; flex-wrap:wrap; gap:16px; justify-content:flex-start}
-.card{
-  width:200px;
-  background:var(--card);
-  border-radius:12px;
-  overflow:hidden;
-  transition: transform .18s, box-shadow .18s;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-  display:flex; flex-direction:column; align-items:stretch;
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
 }
-.card img{width:100%; height:120px; object-fit:cover; display:block}
-.card .card-body{padding:12px; flex:1}
-.card h3{margin:0 0 6px; font-size:16px}
-.card p{margin:0 0 8px; font-size:13px; color:#cfe9ff}
-.card .card-actions{display:flex; gap:8px; padding:0 12px 12px}
-.card button{
-  flex:1;
-  padding:8px;
-  border-radius:8px;
-  border:none;
-  cursor:pointer;
-  font-weight:600;
-  transition:transform .12s, box-shadow .12s;
-}
-.card button:hover{transform:translateY(-3px)}
-.btn-primary{background:linear-gradient(90deg,var(--neon),var(--accent)); color:#001}
-.btn-ghost{background:rgba(255,255,255,0.06); color:#e9faff}
 
-/* Forms / general buttons */
-.primary{background:linear-gradient(90deg,var(--neon),var(--accent)); color:#001; border:none; padding:10px 16px; border-radius:10px; cursor:pointer}
-.primary:hover{box-shadow:0 8px 30px rgba(155,89,255,0.12)}
+.card {
+  width: 220px;
+  background: var(--card-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid var(--mario-green);
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 3px 3px 0px var(--mario-red);
+  cursor: pointer; /* IMPORTANTE: Cursor de puntero para indicar click */
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 6px 6px 0px var(--mario-yellow);
+}
+
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 2px solid var(--mario-red);
+}
+
+.card .card-body {
+  padding: 14px;
+  flex: 1;
+}
+
+.card h3 {
+  font-size: 14px;
+  color: var(--mario-yellow);
+  text-shadow: none;
+}
+
+/* Botones (general y en tarjetas) */
+.btn-base {
+  flex: 1;
+  padding: 12px;
+  border-radius: 4px;
+  border: 2px solid #000;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Press Start 2P', cursive;
+  transition: all .15s;
+  text-transform: uppercase;
+  font-size: 10px;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.btn-primary,
+.primary {
+  background: var(--mario-red);
+  color: var(--text-light);
+}
+
+.btn-primary:hover,
+.primary:hover {
+  background: var(--mario-yellow);
+  color: var(--bg-dark);
+  box-shadow: 2px 2px 0 var(--mario-red), 4px 4px 0 #000;
+  transform: translate(-2px, -2px);
+}
+
+.btn-ghost {
+  background: var(--bg-medium);
+  color: var(--mario-green);
+  border: 2px solid var(--mario-green);
+}
+
+.btn-ghost:hover {
+  background: #000;
+  color: var(--mario-yellow);
+  border-color: var(--mario-yellow);
+}
 
 /* Modal */
-.modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:2000; align-items:center; justify-content:center}
-.modal-content{width:90%; max-width:900px; background: linear-gradient(180deg, rgba(12,12,25,0.95), rgba(16,16,30,0.98)); padding:18px; border-radius:12px; color:#fff; box-shadow:0 12px 40px rgba(0,0,0,0.8)}
-.close-btn{background:transparent; border:none; color:#fff; font-size:26px; float:right; cursor:pointer}
-
-/* Responsive */
-@media (max-width:900px){
-  .card{width:46%}
+.modal-content {
+  background: var(--bg-medium);
+  padding: 30px;
+  border-radius: 4px;
+  border: 4px solid var(--mario-red);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 10px var(--mario-yellow);
 }
-@media (max-width:560px){
-  nav{display:none}
-  .card{width:100%}
-  header{padding:12px}
-  .hero-inner h2{font-size:24px}
+
+.close-btn {
+  background: var(--mario-yellow);
+  color: var(--bg-dark);
+  border: 2px solid #000;
+  box-shadow: -3px 3px 0 #000;
+}
+.close-btn:hover {
+  background: var(--mario-green);
+  color: var(--bg-dark);
+}
+
+/* Inputs y otros elementos... */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  background-color: var(--bg-dark) !important;
+  border: 2px solid var(--mario-red) !important;
+  color: var(--mario-yellow) !important;
+  font-family: "IBM Plex Mono", monospace !important;
+  text-transform: uppercase;
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--mario-green) !important;
+}
+::placeholder {
+  color: var(--text-muted);
+}
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 30px;
+  background-color: rgba(34, 34, 34, 0.9);
+  border-top: 2px solid var(--mario-red);
+  color: var(--text-muted);
+  font-size: 14px;
 }
