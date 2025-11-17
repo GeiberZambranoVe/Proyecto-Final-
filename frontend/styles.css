@@ -1,0 +1,154 @@
+:root {
+    --color-primary-kanji: #FF004D; /* Rojo Carmesí/Japonés */
+    --color-secondary-neon: #FF00FF; /* Magenta Neón para Glow */
+    --color-accent-light: #F0F8FF; /* Blanco neón para textos */
+    --color-dark-bg: #0A0A0A; /* Negro puro */
+    --color-mid-bg: #1A1A1A; /* Fondo para elementos y tarjetas */
+    --color-border-dark: #333333; /* Borde oscuro */
+    --color-text-input: #cfd8dc; 
+    --font-title: 'Michroma', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* Fondo de la Interfaz: Oscuro, Texturizado y Neón-Japonés */
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-dark-bg);
+    color: var(--color-accent-light);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    /* Patrón sutil que simula líneas de interfaz japonesa */
+    background-image: linear-gradient(rgba(255, 0, 77, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 0, 77, 0.05) 1px, transparent 1px);
+    background-size: 8px 8px;
+}
+
+/* Animación del Título Principal */
+@keyframes kanji-glow {
+    0%, 100% { text-shadow: 0 0 5px var(--color-primary-kanji), 0 0 15px var(--color-primary-kanji); }
+    50% { text-shadow: 0 0 10px var(--color-primary-kanji), 0 0 25px var(--color-secondary-neon); }
+}
+
+.title-kanji {
+    font-family: var(--font-title);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    animation: kanji-glow 2s infinite alternate ease-in-out;
+    border-bottom: 2px solid var(--color-primary-kanji);
+    padding-bottom: 4px;
+    display: inline-block;
+}
+
+.container {
+    max-width: 1280px;
+    margin: auto;
+    position: relative;
+    z-index: 10;
+}
+
+/* Header con Glow */
+header {
+    background-color: var(--color-mid-bg);
+    border-bottom: 2px solid var(--color-primary-kanji);
+    box-shadow: 0 5px 30px rgba(255, 0, 77, 0.25);
+}
+
+/* Inputs y Selects */
+input[type="text"], input[type="number"], input[type="url"], select, textarea {
+    font-family: var(--font-body);
+    background-color: #242424; 
+    border: 1px solid var(--color-primary-kanji);
+    color: var(--color-text-input);
+    transition: all 0.2s ease-in-out;
+}
+input[type="text"]:focus, input[type="number"]:focus, input[type="url"]:focus, select:focus, textarea:focus {
+    border-color: var(--color-secondary-neon);
+    box-shadow: 0 0 0 3px rgba(255, 0, 255, 0.4); 
+    outline: none;
+}
+::placeholder {
+    color: #7b859e;
+}
+
+/* Botones de Acción (Registro/Filtro) */
+.btn-primary {
+    background-color: var(--color-primary-kanji);
+    color: var(--color-dark-bg);
+    font-weight: 700;
+    transition: all 0.3s ease-in-out;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+.btn-primary:hover {
+    background-color: var(--color-secondary-neon);
+    color: white;
+    box-shadow: 0 0 15px var(--color-secondary-neon);
+    transform: translateY(-3px) scale(1.02);
+}
+.btn-danger {
+    background-color: #6a000a; /* Rojo oscuro para eliminar */
+    color: var(--color-primary-kanji);
+    transition: all 0.3s ease-in-out;
+    border: 1px solid var(--color-primary-kanji);
+}
+.btn-danger:hover {
+    background-color: var(--color-primary-kanji);
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 0, 77, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Tarjetas de juego (Game Card) */
+.game-card {
+    background-color: var(--color-mid-bg);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 4px; /* Más angulares */
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+}
+.game-card:hover {
+    transform: translateY(-10px) scale(1.05); 
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 1), 0 0 30px rgba(255, 0, 77, 0.8); 
+    border-color: var(--color-primary-kanji);
+    z-index: 1;
+}
+
+/* Estrellas */
+.star-filled {
+    color: #FFD700; /* Dorado brillante */
+    text-shadow: 0 0 6px #FFD700;
+}
+.star-empty {
+    color: #4a5568;
+}
+
+/* Estados (Status Tags) - Usando terminología japonesa */
+.status-completed { background-color: #388E3C; color: white; font-weight: 700; } 
+.status-playing { background-color: var(--color-secondary-neon); color: var(--color-dark-bg); font-weight: 700; } 
+.status-backlog { background-color: var(--color-primary-kanji); color: white; font-weight: 700; } 
+
+/* Modal con Glow */
+#modalContent {
+    background-color: var(--color-mid-bg);
+    border: 3px solid var(--color-primary-kanji);
+    box-shadow: 0 0 40px rgba(255, 0, 77, 0.8);
+    border-radius: 6px;
+}
+
+/* Filtros de estado */
+.filter-active {
+    background-color: var(--color-primary-kanji) !important;
+    color: white !important;
+    box-shadow: 0 0 10px var(--color-primary-kanji);
+    border-color: var(--color-primary-kanji) !important;
+}
+
+/* Estilo para los títulos de la tarjeta y texto */
+.card-title, .details-title {
+    font-family: var(--font-title);
+    letter-spacing: 1px;
+}
+.card-platform {
+    font-family: var(--font-body);
+}
