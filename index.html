@@ -1,75 +1,571 @@
-<!doctype html>
-<main>
-<section class="filters">
-<select id="filter-platform">
-<option value="all">Todas las plataformas</option>
-</select>
-<select id="filter-genre">
-<option value="all">Todos los géneros</option>
-</select>
-</section>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkpoint | Arsenal de Títulos Personal</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #14b8a6; /* Teal-500 - Neon Accent */
+            --color-secondary: #2dd4bf; /* Teal-400 */
+            --color-dark: #111827; /* Gray-900 */
+            --color-light: #f3f4f6; /* Gray-100 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-dark);
+            color: var(--color-light);
+        }
+        .container {
+            max-width: 1280px;
+            margin: auto;
+        }
+        /* Estilos personalizados para la tarjeta de juego */
+        .game-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            background-color: #1f2937; /* Gray-800 */
+            border: 1px solid #374151; /* Gray-700 */
+        }
+        .game-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+        .star-filled {
+            color: #fcd34d; /* Yellow-300 */
+        }
+        .star-empty {
+            color: #6b7280; /* Gray-400 */
+        }
+        /* Color para misión cumplida (más épico) */
+        .status-completed {
+            background-color: #f97316; /* Orange-500 */
+        }
+        /* Color para jugando (activo) */
+        .status-playing {
+            background-color: #22c55e; /* Green-500 */
+        }
+        /* Color para pendiente (backlog) */
+        .status-backlog {
+            background-color: #ef4444; /* Red-500 */
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8">
 
+    <div class="container">
+        <!-- Encabezado y Barra de Búsqueda -->
+        <header class="mb-8 p-4 bg-gray-800 rounded-xl shadow-lg flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <h1 class="text-3xl font-bold text-white tracking-wider">
+                <span class="text-teal-400">Check</span>point
+            </h1>
+            <div class="flex items-center space-x-3 w-full md:w-auto">
+                <input type="text" id="searchInput" placeholder="Buscar títulos en el arsenal..." class="p-2 border border-gray-600 rounded-lg text-gray-900 w-full md:w-80 focus:ring-teal-500 focus:border-teal-500 transition duration-150" oninput="app.searchGames(this.value)">
+                <button onclick="app.showGameForm()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 whitespace-nowrap">
+                    + Registrar Misión
+                </button>
+            </div>
+        </header>
 
-<section id="games-grid" class="grid"></section>
-</main>
+        <!-- Contenedor Principal de la Aplicación -->
+        <main id="appContent">
+            <!-- El arsenal de títulos se renderizará aquí -->
+        </main>
+    </div>
 
+    <!-- Modal para Formulario y Detalles -->
+    <div id="appModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 hidden items-center justify-center p-4" onclick="if(event.target.id === 'appModal') app.hideModal()">
+        <div id="modalContent" class="bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0">
+            <!-- El contenido del modal (formulario o detalles) se insertará aquí -->
+        </div>
+    </div>
 
-<!-- Modal de juego -->
-<div id="game-modal" class="modal hidden">
-<div class="modal-content">
-<button class="close-modal">×</button>
-<div class="modal-body">
-<img id="modal-img" src="" alt="">
-<div class="modal-info">
-<h2 id="modal-title"></h2>
-<p id="modal-meta"></p>
-<p id="modal-desc"></p>
-<p class="price" id="modal-price"></p>
-<div class="modal-actions">
-<button id="add-cart">Agregar al carrito</button>
-<button id="toggle-fav">❤ Favorito</button>
-</div>
+    <script>
+        // --- Constantes y Funciones de Utilidad ---
+        const LOCAL_STORAGE_KEY = 'checkpointData';
+        
+        /**
+         * Genera un ID único simple.
+         * @returns {string} Un ID único.
+         */
+        const generateId = () => Date.now().toString(36) + Math.random().toString(36).substring(2);
 
+        /**
+         * Carga los datos de la biblioteca desde localStorage.
+         * @returns {Object} El estado de la aplicación.
+         */
+        const loadData = () => {
+            try {
+                const data = localStorage.getItem(LOCAL_STORAGE_KEY);
+                return data ? JSON.parse(data) : { games: [] };
+            } catch (e) {
+                console.error("Error al cargar datos de localStorage:", e);
+                return { games: [] };
+            }
+        };
 
-<hr>
-<div class="reviews">
-<h3>Reseñas</h3>
-<form id="review-form">
-<input id="review-name" placeholder="Tu nombre" required />
-<textarea id="review-text" placeholder="Tu reseña" required></textarea>
-<label>Rating: <select id="review-rating"><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></label>
-<button type="submit">Enviar reseña</button>
-</form>
-<ul id="reviews-list"></ul>
-</div>
-</div>
-</div>
-</div>
-</div>
+        /**
+         * Guarda el estado actual de la aplicación en localStorage.
+         * @param {Object} state - El estado de la aplicación.
+         */
+        const saveData = (state) => {
+            try {
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+                console.error("Error al guardar datos en localStorage:", e);
+            }
+        };
 
+        // --- Objeto Principal de la Aplicación (Checkpoint App) ---
+        const app = {
+            state: loadData(),
+            currentView: 'library', 
+            
+            /**
+             * Inicializa la aplicación y renderiza la vista inicial.
+             */
+            init() {
+                this.renderLibrary();
+                document.getElementById('appModal').addEventListener('click', this.handleModalClick);
+            },
 
-<!-- Panel carrito -->
-<aside id="cart-panel" class="panel hidden">
-<h3>Carrito</h3>
-<button id="close-cart">Cerrar</button>
-<ul id="cart-items"></ul>
-<div class="cart-footer">
-<p>Total: <span id="cart-total">$0.00</span></p>
-<button id="checkout">Comprar</button>
-<button id="empty-cart">Vaciar carrito</button>
-</div>
-</aside>
+            /**
+             * Maneja la interacción con los datos.
+             * @param {Object} newState - El nuevo estado (parcial) a fusionar.
+             */
+            setState(newState) {
+                this.state = { ...this.state, ...newState };
+                saveData(this.state);
+                this.renderLibrary();
+            },
 
+            // --- Renderizado de Componentes ---
 
-<!-- Panel favoritos -->
-<aside id="favs-panel" class="panel hidden">
-<h3>Favoritos</h3>
-<button id="close-favs">Cerrar</button>
-<ul id="favs-list"></ul>
-</aside>
+            /**
+             * Renderiza las estrellas de puntuación.
+             * @param {number} rating - La puntuación (0-5).
+             * @returns {string} HTML de las estrellas.
+             */
+            renderStars(rating) {
+                let html = '';
+                for (let i = 1; i <= 5; i++) {
+                    const cls = i <= rating ? 'star-filled' : 'star-empty';
+                    html += `<svg class="w-5 h-5 inline-block ${cls}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.96a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.373 2.45c-.307.223-.466.594-.466.965l1.287 3.96c.3.921-.755 1.688-1.54 1.118l-3.373-2.45c-.307-.223-.68-.223-.987 0l-3.373 2.45c-.784.57-1.84-.197-1.54-1.118l1.287-3.96c0-.371-.159-.742-.466-.965l-3.373-2.45c-.784-.57-.382-1.81.588-1.81h4.17c.365 0 .708-.182.95-.69l1.286-3.96z"></path></svg>`;
+                }
+                return html;
+            },
 
+            /**
+             * Renderiza la vista principal de la biblioteca.
+             * @param {Array<Object>} [games=this.state.games] - Lista de juegos a mostrar.
+             */
+            renderLibrary(games = this.state.games) {
+                const content = document.getElementById('appContent');
+                content.innerHTML = `
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-white mb-4">Tu Arsenal de Títulos (${games.length} misiones)</h2>
+                        <div class="flex flex-wrap gap-4 text-sm font-medium">
+                            ${this.renderStatusFilter()}
+                        </div>
+                    </div>
+                    <div id="gameList" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                        ${games.map(game => this.renderGameCard(game)).join('')}
+                    </div>
+                    ${games.length === 0 ? '<p class="text-center text-gray-400 mt-10">¡Sistema de registro de misión vacío! Inicia una nueva incursión.</p>' : ''}
+                `;
+            },
 
-<script src="data.js"></script>
-<script src="script.js"></script>
+            /**
+             * Renderiza los botones de filtro por estado.
+             * @returns {string} HTML de los filtros.
+             */
+            renderStatusFilter() {
+                const statuses = ['Todos', 'En Curso', 'Misión Cumplida', 'Pendiente'];
+                return statuses.map(status => {
+                    const isActive = this.state.filterStatus === status;
+                    const baseCls = 'py-1 px-3 rounded-full cursor-pointer transition duration-150';
+                    const activeCls = 'bg-teal-600 text-white shadow-md';
+                    const inactiveCls = 'bg-gray-700 text-gray-300 hover:bg-gray-600';
+
+                    return `<span 
+                                class="${baseCls} ${isActive ? activeCls : inactiveCls}" 
+                                onclick="app.filterByStatus('${status}')">
+                                ${status}
+                            </span>`;
+                }).join('');
+            },
+            
+            /**
+             * Aplica el filtro de estado a la lista de juegos.
+             * @param {string} status - El estado por el que filtrar.
+             */
+            filterByStatus(status) {
+                this.state.filterStatus = status;
+                const search = document.getElementById('searchInput').value.toLowerCase();
+                this.searchGames(search, status);
+            },
+
+            /**
+             * Renderiza una tarjeta individual de juego.
+             * @param {Object} game - Objeto del juego.
+             * @returns {string} HTML de la tarjeta.
+             */
+            renderGameCard(game) {
+                const statusMap = {
+                    'Playing': { text: 'En Curso', class: 'status-playing' },
+                    'Completed': { text: 'Misión Cumplida', class: 'status-completed' },
+                    'Backlog': { text: 'Pendiente', class: 'status-backlog' }
+                };
+                const status = statusMap[game.status] || { text: 'Pendiente', class: 'status-backlog' };
+                const cover = game.coverUrl || `https://placehold.co/200x300/1f2937/d1d5db?text=${encodeURIComponent(game.title.substring(0, 10))}`;
+
+                return `
+                    <div class="game-card rounded-lg overflow-hidden shadow-xl flex flex-col cursor-pointer" onclick="app.showGameDetails('${game.id}')">
+                        <div class="relative w-full h-40 sm:h-52 md:h-64 lg:h-72">
+                            <img src="${cover}" alt="Portada de ${game.title}" 
+                                 onerror="this.onerror=null;this.src='https://placehold.co/200x300/1f2937/d1d5db?text=${encodeURIComponent(game.title.substring(0, 10))}'"
+                                 class="w-full h-full object-cover">
+                            <span class="absolute top-2 right-2 text-xs font-semibold px-2 py-1 rounded ${status.class} text-white shadow">
+                                ${status.text}
+                            </span>
+                        </div>
+                        <div class="p-3 flex flex-col flex-grow">
+                            <h3 class="text-lg font-bold truncate text-white mb-1">${game.title}</h3>
+                            <p class="text-sm text-gray-400 mb-2">${game.platform}</p>
+                            <div class="flex items-center space-x-1">
+                                ${this.renderStars(game.rating)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+            
+            /**
+             * Muestra los detalles de un juego en un modal.
+             * @param {string} id - ID del juego.
+             */
+            showGameDetails(id) {
+                const game = this.state.games.find(g => g.id === id);
+                if (!game) return;
+
+                const content = document.getElementById('modalContent');
+                content.innerHTML = `
+                    <div class="flex justify-between items-start mb-6">
+                        <h2 class="text-3xl font-bold text-white">${game.title}</h2>
+                        <button onclick="app.hideModal()" class="text-gray-400 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="md:col-span-1">
+                            <img src="${game.coverUrl || 'https://placehold.co/200x300/1f2937/d1d5db?text=Portada'}" alt="Portada" class="w-full rounded-lg shadow-xl mb-4">
+                            <div class="space-y-2 text-sm text-gray-300">
+                                <p><strong>Plataforma:</strong> ${game.platform}</p>
+                                <p><strong>Estado de Misión:</strong> <span class="font-semibold">${statusMap[game.status]?.text || 'Pendiente'}</span></p>
+                                <p><strong>Tiempo en Juego:</strong> ${game.hoursPlayed} h</p>
+                            </div>
+                            <div class="mt-4 flex space-x-2">
+                                <button onclick="app.showGameForm('${game.id}')" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 rounded-lg text-sm">Editar Datos</button>
+                                <button onclick="app.deleteGame('${game.id}')" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg text-sm">Desinstalar</button>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <h3 class="text-xl font-bold mb-3 text-teal-400">Informe de Rendimiento</h3>
+                            <div class="flex items-center space-x-2 mb-4">
+                                ${this.renderStars(game.rating)}
+                                <span class="text-2xl font-bold">${game.rating.toFixed(1)} / 5</span>
+                            </div>
+                            <p class="text-gray-300 whitespace-pre-wrap">${game.review || 'Aún no hay un informe detallado de esta misión.'}</p>
+                        </div>
+                    </div>
+                `;
+                this.showModal();
+            },
+
+            // --- Funciones de Gestión de Datos (CRUD) ---
+
+            /**
+             * Muestra el formulario para agregar o editar un juego.
+             * @param {string} [id=null] - ID del juego a editar.
+             */
+            showGameForm(id = null) {
+                const game = id ? this.state.games.find(g => g.id === id) : {};
+                const isEdit = !!id;
+                
+                const title = isEdit ? `Editar Misión: ${game.title}` : 'Registrar Nueva Misión';
+                const buttonText = isEdit ? 'Confirmar Despliegue' : 'Confirmar Registro';
+
+                const content = document.getElementById('modalContent');
+                content.innerHTML = `
+                    <div class="flex justify-between items-start mb-6">
+                        <h2 class="text-2xl font-bold text-white">${title}</h2>
+                        <button onclick="app.hideModal()" class="text-gray-400 hover:text-white transition duration-150">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+
+                    <form id="gameForm" onsubmit="event.preventDefault(); app.saveGame(this, '${id || ''}')" class="space-y-4">
+                        <input type="hidden" name="id" value="${id || ''}">
+                        
+                        <!-- Título -->
+                        <div>
+                            <label for="title" class="block text-sm font-medium text-gray-300 mb-1">Título de la Misión</label>
+                            <input type="text" id="title" name="title" value="${game.title || ''}" required class="w-full p-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-teal-500">
+                        </div>
+                        
+                        <!-- Plataforma y Horas Jugadas -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="platform" class="block text-sm font-medium text-gray-300 mb-1">Plataforma de Despliegue</label>
+                                <input type="text" id="platform" name="platform" value="${game.platform || ''}" required class="w-full p-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-teal-500">
+                            </div>
+                            <div>
+                                <label for="hoursPlayed" class="block text-sm font-medium text-gray-300 mb-1">Tiempo de Incursión (Horas Jugadas)</label>
+                                <input type="number" id="hoursPlayed" name="hoursPlayed" value="${game.hoursPlayed || 0}" min="0" required class="w-full p-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-teal-500">
+                            </div>
+                        </div>
+
+                        <!-- Estado y Portada -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="status" class="block text-sm font-medium text-gray-300 mb-1">Estado de Misión</label>
+                                <select id="status" name="status" required class="w-full p-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-teal-500">
+                                    <option value="Playing" ${game.status === 'Playing' ? 'selected' : ''}>En Curso</option>
+                                    <option value="Completed" ${game.status === 'Completed' ? 'selected' : ''}>Misión Cumplida</option>
+                                    <option value="Backlog" ${game.status === 'Backlog' || !game.status ? 'selected' : ''}>Pendiente (Backlog)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="coverUrl" class="block text-sm font-medium text-gray-300 mb-1">URL de Arte de Portada (Opcional)</label>
+                                <input type="url" id="coverUrl" name="coverUrl" value="${game.coverUrl || ''}" class="w-full p-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-teal-500">
+                            </div>
+                        </div>
+
+                        <!-- Puntuación -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Evaluación (Estrellas)</label>
+                            <div id="ratingInput" class="flex items-center space-x-1">
+                                ${this.renderRatingInputs(game.rating || 0)}
+                            </div>
+                            <input type="hidden" name="rating" id="hiddenRating" value="${game.rating || 0}">
+                        </div>
+
+                        <!-- Reseña -->
+                        <div>
+                            <label for="review" class="block text-sm font-medium text-gray-300 mb-1">Reseña / Informe de Misión</label>
+                            <textarea id="review" name="review" rows="5" class="w-full p-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-teal-500">${game.review || ''}</textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-lg transition duration-150 shadow-lg">${buttonText}</button>
+                    </form>
+                `;
+                this.showModal();
+            },
+
+            /**
+             * Renderiza los inputs de rating para el formulario.
+             * @param {number} currentRating - La puntuación actual.
+             * @returns {string} HTML de las estrellas interactivas.
+             */
+            renderRatingInputs(currentRating) {
+                let html = '';
+                for (let i = 1; i <= 5; i++) {
+                    const cls = i <= currentRating ? 'star-filled' : 'star-empty';
+                    html += `<svg 
+                                class="w-7 h-7 cursor-pointer transition duration-150 hover:scale-110" 
+                                data-rating="${i}"
+                                fill="currentColor" 
+                                viewBox="0 0 20 20"
+                                onclick="app.setRating(${i})"
+                                onmouseover="app.previewRating(${i})"
+                                onmouseout="app.clearPreviewRating()">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.96a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.373 2.45c-.307.223-.466.594-.466.965l1.287 3.96c.3.921-.755 1.688-1.54 1.118l-3.373-2.45c-.307-.223-.68-.223-.987 0l-3.373 2.45c-.784.57-1.84-.197-1.54-1.118l1.287-3.96c0-.371-.159-.742-.466-.965l-3.373-2.45c-.784-.57-.382-1.81.588-1.81h4.17c.365 0 .708-.182.95-.69l1.286-3.96z"></path>
+                             </svg>`;
+                }
+                return html;
+            },
+
+            /**
+             * Establece la puntuación final.
+             * @param {number} rating - La puntuación seleccionada.
+             */
+            setRating(rating) {
+                document.getElementById('hiddenRating').value = rating;
+                this.updateStarVisuals(rating);
+            },
+            
+            /**
+             * Muestra una previsualización de la puntuación al pasar el ratón.
+             * @param {number} rating - La puntuación a previsualizar.
+             */
+            previewRating(rating) {
+                this.updateStarVisuals(rating, true);
+            },
+
+            /**
+             * Limpia la previsualización del rating.
+             */
+            clearPreviewRating() {
+                const currentRating = parseInt(document.getElementById('hiddenRating').value);
+                this.updateStarVisuals(currentRating);
+            },
+            
+            /**
+             * Actualiza el color de las estrellas en el formulario.
+             * @param {number} rating - La puntuación a mostrar.
+             * @param {boolean} [isPreview=false] - Indica si es solo una previsualización.
+             */
+            updateStarVisuals(rating, isPreview = false) {
+                const stars = document.getElementById('ratingInput').querySelectorAll('svg');
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.classList.add('star-filled');
+                        star.classList.remove('star-empty');
+                    } else {
+                        star.classList.add('star-empty');
+                        star.classList.remove('star-filled');
+                    }
+                });
+            },
+
+            /**
+             * Guarda un juego nuevo o editado.
+             * @param {HTMLFormElement} form - El formulario de juego.
+             * @param {string} id - El ID del juego (vacío para nuevo).
+             */
+            saveGame(form, id) {
+                const formData = new FormData(form);
+                // FIX: If id is an empty string (new game), isEdit is false.
+                const isEdit = !!id; 
+                
+                const gameData = {
+                    title: formData.get('title'),
+                    platform: formData.get('platform'),
+                    status: formData.get('status'),
+                    hoursPlayed: parseInt(formData.get('hoursPlayed')) || 0,
+                    coverUrl: formData.get('coverUrl') || null,
+                    rating: parseInt(formData.get('rating')) || 0,
+                    review: formData.get('review'),
+                };
+                
+                if (isEdit) {
+                    // Edición: Actualiza el juego existente
+                    this.state.games = this.state.games.map(g => 
+                        g.id === id ? { ...g, ...gameData } : g
+                    );
+                } else {
+                    // Nuevo juego: Añade un nuevo juego
+                    gameData.id = generateId();
+                    this.state.games.push(gameData);
+                }
+                
+                this.setState({ games: this.state.games });
+                this.hideModal();
+            },
+
+            /**
+             * Elimina un juego.
+             * @param {string} id - ID del juego a eliminar.
+             */
+            deleteGame(id) {
+                if (window.confirm('¡Advertencia! ¿Estás seguro de que quieres eliminar este título de tu arsenal? Se perderá el informe de misión.')) {
+                    this.state.games = this.state.games.filter(g => g.id !== id);
+                    this.setState({ games: this.state.games });
+                    this.hideModal();
+                }
+            },
+            
+            /**
+             * Busca juegos en la biblioteca.
+             * @param {string} query - El término de búsqueda.
+             * @param {string} [statusFilter=this.state.filterStatus] - Filtro de estado actual.
+             */
+            searchGames(query, statusFilter = this.state.filterStatus || 'Todos') {
+                const q = query.toLowerCase().trim();
+                
+                let filteredGames = this.state.games;
+
+                // Mapeo de estados de filtro a claves de datos
+                const statusMap = {
+                    'En Curso': 'Playing',
+                    'Misión Cumplida': 'Completed',
+                    'Pendiente': 'Backlog'
+                };
+
+                // Aplicar filtro de estado
+                if (statusFilter !== 'Todos') {
+                    const statusKey = statusMap[statusFilter];
+                    filteredGames = filteredGames.filter(game => game.status === statusKey);
+                }
+                
+                // Aplicar filtro de búsqueda
+                if (q.length > 0) {
+                    filteredGames = filteredGames.filter(game =>
+                        game.title.toLowerCase().includes(q) ||
+                        game.platform.toLowerCase().includes(q)
+                    );
+                }
+
+                this.renderLibrary(filteredGames);
+            },
+
+            // --- Funciones de Modal ---
+            
+            /** Muestra el modal */
+            showModal() {
+                const modal = document.getElementById('appModal');
+                const content = document.getElementById('modalContent');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                
+                // Animación de entrada
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            },
+            
+            /** Oculta el modal */
+            hideModal() {
+                const modal = document.getElementById('appModal');
+                const content = document.getElementById('modalContent');
+                
+                // Animación de salida
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+
+                setTimeout(() => {
+                    modal.classList.remove('flex');
+                    modal.classList.add('hidden');
+                    // Reiniciar el contenido del modal
+                    content.innerHTML = ''; 
+                }, 300); // Coincide con la duración de la transición
+            }
+        };
+
+        // Datos de estado para la vista de detalles
+        const statusMap = {
+            'Playing': { text: 'En Curso', class: 'status-playing' },
+            'Completed': { text: 'Misión Cumplida', class: 'status-completed' },
+            'Backlog': { text: 'Pendiente', class: 'status-backlog' }
+        };
+
+        // Inicializa la aplicación cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            // Datos de ejemplo para que la biblioteca no esté vacía al inicio
+            if (app.state.games.length === 0) {
+                app.state.games = [
+                    { id: generateId(), title: "Elden Ring", platform: "PC", status: "Completed", hoursPlayed: 180, rating: 5, review: "Una obra maestra del diseño de mundo abierto. ¡Misión Cumplida!", coverUrl: "https://placehold.co/200x300/14b8a6/ffffff?text=Elden+Ring" },
+                    { id: generateId(), title: "Hades", platform: "Switch", status: "Playing", hoursPlayed: 55, rating: 4, review: "Ritmo de juego perfecto para el modo portátil. Una incursión adictiva.", coverUrl: "https://placehold.co/200x300/2dd4bf/ffffff?text=Hades" },
+                    { id: generateId(), title: "Starfield", platform: "Xbox", status: "Backlog", hoursPlayed: 0, rating: 0, review: "", coverUrl: "https://placehold.co/200x300/1e3a8a/ffffff?text=Starfield" },
+                ];
+                saveData(app.state);
+            }
+            app.init();
+        });
+    </script>
 </body>
 </html>
