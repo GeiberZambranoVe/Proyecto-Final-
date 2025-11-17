@@ -1,61 +1,33 @@
-// catálogo con variedad de géneros; algunos gratuitos (precio: 0)
-const catalogoJuegos = [
-  // Terror
-  { titulo: "Resident Evil 7", genero: "Terror", plataforma: "PC", anio: 2017, desarrollador: "Capcom", descripcion: "Survival horror en primera persona. Explora una casa inquietante y sobrevive.", precio: 39, imagen: "https://i.imgur.com/JhQqFHV.jpg" },
-  { titulo: "Outlast", genero: "Terror", plataforma: "PC", anio: 2013, desarrollador: "Red Barrels", descripcion: "Explora un psiquiátrico aterrador con cámara y linterna.", precio: 19, imagen: "https://i.imgur.com/YMkhKfO.jpg" },
-  { titulo: "Phasmophobia", genero: "Terror", plataforma: "PC", anio: 2020, desarrollador: "Kinetic Games", descripcion: "Investigación multijugador de actividad paranormal.", precio: 14, imagen: "https://i.imgur.com/NB2Yk8J.jpg" },
-
-  // Acción
-  { titulo: "Cyberpunk 2077", genero: "Acción", plataforma: "PC", anio: 2020, desarrollador: "CD Projekt", descripcion: "Aventuras en Night City con narrativa y acción frenética.", precio: 49, imagen: "https://i.imgur.com/kqz4ZzF.jpg" },
-  { titulo: "God of War", genero: "Acción", plataforma: "PlayStation", anio: 2018, desarrollador: "Santa Monica Studio", descripcion: "Kratos y Atreus en una épica mitológica.", precio: 39, imagen: "https://i.imgur.com/NzM9iM0.jpg" },
-  { titulo: "Doom Eternal", genero: "Acción", plataforma: "Multi", anio: 2020, desarrollador: "id Software", descripcion: "FPS rápido y brutal contra demonios.", precio: 29, imagen: "https://i.imgur.com/3y3kBfK.jpg" },
-
-  // Simulación
-  { titulo: "The Sims 4", genero: "Simulación", plataforma: "PC", anio: 2014, desarrollador: "EA", descripcion: "Crea y controla la vida de tus Sims.", precio: 29, imagen: "https://i.imgur.com/8ZjB9GQ.jpg" },
-  { titulo: "Microsoft Flight Simulator", genero: "Simulación", plataforma: "PC", anio: 2020, desarrollador: "Asobo Studio", descripcion: "Vuelo hiperrealista con el mundo entero.", precio: 59, imagen: "https://i.imgur.com/aErwxzj.jpg" },
-  { titulo: "Stardew Valley", genero: "Simulación", plataforma: "Multi", anio: 2016, desarrollador: "ConcernedApe", descripcion: "Farming y vida en pueblo con corazón.", precio: 14, imagen: "https://i.imgur.com/EPgYFi6.jpg" },
-
-  // RPG
-  { titulo: "Elden Ring", genero: "RPG", plataforma: "PC", anio: 2022, desarrollador: "FromSoftware", descripcion: "Mundo abierto con combates desafiantes.", precio: 59, imagen: "https://i.imgur.com/oXJp8Kk.jpg" },
-  { titulo: "The Witcher 3", genero: "RPG", plataforma: "PC", anio: 2015, desarrollador: "CD Projekt", descripcion: "Cacería de monstruos y grandes decisiones.", precio: 29, imagen: "https://i.imgur.com/DlV2EJk.jpg" },
-  { titulo: "Divinity: Original Sin 2", genero: "RPG", plataforma: "PC", anio: 2017, desarrollador: "Larian Studios", descripcion: "RPG táctico con libertad máxima.", precio: 39, imagen: "https://i.imgur.com/8sQJZ1s.jpg" },
-
-  // Deportes
-  { titulo: "FIFA 23", genero: "Deportes", plataforma: "Multi", anio: 2022, desarrollador: "EA Sports", descripcion: "Simulador de fútbol con modos online.", precio: 69, imagen: "https://i.imgur.com/9B0gVRr.jpg" },
-  { titulo: "NBA 2K23", genero: "Deportes", plataforma: "Multi", anio: 2022, desarrollador: "Visual Concepts", descripcion: "Simulador de baloncesto realista.", precio: 59, imagen: "https://i.imgur.com/7kFhEoB.jpg" },
-
-  // Shooter / Multiplayer (incluye gratuitos)
-  { titulo: "Fortnite", genero: "Acción", plataforma: "Multi", anio: 2017, desarrollador: "Epic Games", descripcion: "Battle Royale con construcción.", precio: 0, imagen: "https://i.imgur.com/dVvqK6u.jpg" },
-  { titulo: "Valorant", genero: "Acción", plataforma: "PC", anio: 2020, desarrollador: "Riot Games", descripcion: "Shooter táctico 5v5 gratuito.", precio: 0, imagen: "https://i.imgur.com/d1TiOvE.jpg" },
-  { titulo: "Apex Legends", genero: "Acción", plataforma: "Multi", anio: 2019, desarrollador: "Respawn", descripcion: "Hero-shooter Battle Royale gratuito.", precio: 0, imagen: "https://i.imgur.com/7i6aGm3.jpg" },
-  { titulo: "Overwatch 2", genero: "Acción", platform: "Multi", plataforma: "Multi", anio: 2022, desarrollador: "Blizzard", descripcion: "Hero shooter por equipos.", precio: 0, imagen: "https://i.imgur.com/wnEYtKn.jpg" },
-
-  // Más acción / indie / variados
-  { titulo: "Hades", genero: "Acción", plataforma: "Multi", anio: 2020, desarrollador: "Supergiant Games", descripcion: "Roguelike con historia y combate adictivo.", precio: 24, imagen: "https://i.imgur.com/ld5x0oJ.jpg" },
-  { titulo: "Celeste", genero: "Acción", plataforma: "Multi", anio: 2018, desarrollador: "Matt Makes Games", descripcion: "Plataformas desafiante con historia emotiva.", precio: 19, imagen: "https://i.imgur.com/1yK1m6T.jpg" },
-  { titulo: "Red Dead Redemption 2", genero: "Acción", plataforma: "Multi", anio: 2018, desarrollador: "Rockstar Games", descripcion: "Western épico de mundo abierto.", precio: 59, imagen: "https://i.imgur.com/PK9pO3y.jpg" },
-
-  // Añade más juegos para acercarte a 100 si quieres (puedes duplicar y cambiar nombre/imagen)
-  { titulo: "SimCity", genero: "Simulación", plataforma: "PC", anio: 2013, desarrollador: "Maxis", descripcion: "Construye y administra tu ciudad.", precio: 9, imagen: "https://i.imgur.com/9z7kP9h.jpg" },
-  { titulo: "Planet Zoo", genero: "Simulación", plataforma: "PC", anio: 2019, desarrollador: "Frontier", descripcion: "Crea y administra un zoológico.", precio: 49, imagen: "https://i.imgur.com/2vQ8Y1G.jpg" },
-  { titulo: "ARK: Survival", genero: "Simulación", plataforma: "Multi", anio: 2017, desarrollador: "Studio Wildcard", descripcion: "Supervivencia con dinosaurios.", precio: 29, imagen: "https://i.imgur.com/3N0rNnD.jpg" },
-
-  // Más RPG / aventura
-  { titulo: "Horizon Zero Dawn", genero: "RPG", plataforma: "PC", anio: 2020, desarrollador: "Guerrilla Games", descripcion: "Aventura postapocalíptica con máquinas.", precio: 39, imagen: "https://i.imgur.com/4a4y1MB.jpg" },
-  { titulo: "Ghost of Tsushima", genero: "Acción", plataforma: "PlayStation", anio: 2020, desarrollador: "Sucker Punch", descripcion: "Samuráis y mundo abierto.", precio: 49, imagen: "https://i.imgur.com/6wGfX8v.jpg" },
-
-  // Indies y clásicos
-  { titulo: "Undertale", genero: "RPG", plataforma: "Multi", anio: 2015, desarrollador: "Toby Fox", descripcion: "RPG único con múltiples finales.", precio: 9, imagen: "https://i.imgur.com/8vQXQpL.jpg" },
-  { titulo: "Hollow Knight", genero: "Acción", plataforma: "Multi", anio: 2017, desarrollador: "Team Cherry", descripcion: "Metroidvania atmosférico.", precio: 15, imagen: "https://i.imgur.com/6zWfKkZ.jpg" },
-
-  // Algunos gratuitos adicionales
-  { titulo: "Team Fortress 2", genero: "Acción", plataforma: "PC", anio: 2007, desarrollador: "Valve", descripcion: "FPS por equipos gratuito.", precio: 0, imagen: "https://i.imgur.com/0zvGkqZ.jpg" },
-
-  // Relleno para catálogo
-  { titulo: "GameX: Arena", genero: "Acción", plataforma: "PC", anio: 2023, desarrollador: "Indie Lab", descripcion: "Arena PvP competitivo.", precio: 12, imagen: "https://i.imgur.com/z6h0GJb.jpg" },
-  { titulo: "Racing Pro 2021", genero: "Simulación", plataforma: "Multi", anio: 2021, desarrollador: "DriveStudios", descripcion: "Carreras realistas.", precio: 29, imagen: "https://i.imgur.com/6I3kHkS.jpg" },
-  { titulo: "Space Miner", genero: "RPG", plataforma: "PC", anio: 2022, desarrollador: "SpaceWorks", descripcion: "Aventura espacial y minería.", precio: 19, imagen: "https://i.imgur.com/qQjV0p9.jpg" },
-  { titulo: "Soccer Manager", genero: "Deportes", plataforma: "PC", anio: 2019, desarrollador: "SportsSoft", descripcion: "Gestiona tu equipo y gana ligas.", precio: 14, imagen: "https://i.imgur.com/3u2bJFs.jpg" },
-
-  // Puedes duplicar y variar para aumentar catálogo hasta 100 fácilmente.
+// data.js - ~30 juegos ficticios estilo retro
+const games = [
+  { id:1, title:"Pixel Quest", year:1990, platform:"NES", genre:"Aventura", price:14.99, image:"img/pixel-1.png", description:"Explora mazmorras y rescata aldeanos en este clásico de 8 bits." },
+  { id:2, title:"Star Racer DX", year:1992, platform:"SNES", genre:"Carreras", price:12.50, image:"img/pixel-2.png", description:"Velocidad y power-ups en pistas intergalácticas." },
+  { id:3, title:"Dungeon Byte", year:1991, platform:"Genesis", genre:"RPG", price:19.99, image:"img/pixel-3.png", description:"RPG por turnos con pixel art detallado y fuego nostálgico." },
+  { id:4, title:"Ninja Echo", year:1989, platform:"NES", genre:"Acción", price:9.99, image:"img/pixel-4.png", description:"Sombra y shuriken: plataformas y combate rápido." },
+  { id:5, title:"Galaxy Blaster", year:1993, platform:"SNES", genre:"Shoot 'em up", price:11.99, image:"img/pixel-5.png", description:"Shooter vertical con oleadas y jefes gigantes." },
+  { id:6, title:"Castle Builder", year:1994, platform:"PC", genre:"Estrategia", price:8.99, image:"img/pixel-6.png", description:"Gestiona recursos y defiende tu reino pixelado." },
+  { id:7, title:"Samurai Dawn", year:1992, platform:"Genesis", genre:"Lucha", price:15.00, image:"img/pixel-7.png", description:"Duelo a duelo en arenas clásicas de 16 bits." },
+  { id:8, title:"Mystic Runner", year:1995, platform:"SNES", genre:"Plataformas", price:10.00, image:"img/pixel-8.png", description:"Plataformas y saltos con magia retro." },
+  { id:9, title:"Retro Kart", year:1994, platform:"SNES", genre:"Carreras", price:13.50, image:"img/pixel-9.png", description:"Karts y power-ups en pistas inspiradas en los clásicos." },
+  { id:10, title:"Cyber Punket", year:1991, platform:"Amiga", genre:"Aventura", price:6.99, image:"img/pixel-10.png", description:"Aventura point-and-click en una ciudad futurista pixelada." },
+  { id:11, title:"Dragon Fall", year:1990, platform:"NES", genre:"RPG", price:17.50, image:"img/pixel-11.png", description:"Viaja por un mundo de dragones y hechicería." },
+  { id:12, title:"Sky Fortress", year:1993, platform:"Genesis", genre:"Shoot 'em up", price:9.50, image:"img/pixel-12.png", description:"Defiende tu fortaleza voladora contra flotas enemigas." },
+  { id:13, title:"Puzzle Pop", year:1992, platform:"Game Boy", genre:"Puzzle", price:4.99, image:"img/pixel-13.png", description:"Relajante pero desafiante, encaja piezas y supera niveles." },
+  { id:14, title:"Alien Harvest", year:1994, platform:"PC", genre:"Simulación", price:7.99, image:"img/pixel-14.png", description:"Gestiona una granja en un planeta lejano." },
+  { id:15, title:"Blade Riders", year:1995, platform:"SNES", genre:"Acción", price:12.00, image:"img/pixel-15.png", description:"Combate montado en motos retro-futuristas." },
+  { id:16, title:"Metro Detective", year:1990, platform:"Amiga", genre:"Aventura", price:5.99, image:"img/pixel-16.png", description:"Investiga crímenes en estaciones subterráneas pixeladas." },
+  { id:17, title:"Hero's Code", year:1993, platform:"Genesis", genre:"RPG", price:16.99, image:"img/pixel-17.png", description:"Un grupo de héroes se enfrenta a una amenaza digital." },
+  { id:18, title:"Bomber Bits", year:1988, platform:"NES", genre:"Arcade", price:6.50, image:"img/pixel-18.png", description:"Explosiones y estrategia rápida en niveles compactos." },
+  { id:19, title:"Cosmo Tennis", year:1992, platform:"SNES", genre:"Deportes", price:8.50, image:"img/pixel-19.png", description:"Tenis arcade con pelotas que rebotan en gravedad variable." },
+  { id:20, title:"Phantom Blade", year:1991, platform:"Genesis", genre:"Acción", price:11.20, image:"img/pixel-20.png", description:"Espadas y fantasmas en niveles sombríos." },
+  { id:21, title:"Solar Quest", year:1993, platform:"PC", genre:"Aventura", price:9.99, image:"img/pixel-21.png", description:"Explora sistemas solares y resuelve misterios antiguos." },
+  { id:22, title:"Turbo Chef", year:1994, platform:"SNES", genre:"Arcade", price:5.00, image:"img/pixel-22.png", description:"Cocina rápido y atiende clientes en tiempo récord." },
+  { id:23, title:"Shadow Ops", year:1995, platform:"Genesis", genre:"Acción", price:14.00, image:"img/pixel-23.png", description:"Operaciones tácticas en escenarios de alta tensión." },
+  { id:24, title:"Frostbite Isles", year:1990, platform:"NES", genre:"Plataformas", price:10.99, image:"img/pixel-24.png", description:"Escala islas congeladas y esquiva trampas heladas." },
+  { id:25, title:"Neo Hoops", year:1992, platform:"SNES", genre:"Deportes", price:7.75, image:"img/pixel-25.png", description:"Baloncesto arcade con personajes exagerados." },
+  { id:26, title:"Arcane Tower", year:1991, platform:"Genesis", genre:"Puzzle", price:6.25, image:"img/pixel-26.png", description:"Rompecabezas mágicos dentro de una torre encantada." },
+  { id:27, title:"Robo Rampage", year:1994, platform:"PC", genre:"Acción", price:13.49, image:"img/pixel-27.png", description:"Pilota un robot y destruye legiones enemigas." },
+  { id:28, title:"Viking Voyage", year:1989, platform:"NES", genre:"Aventura", price:9.49, image:"img/pixel-28.png", description:"Navega, descubre tesoros y combate en altamar." },
+  { id:29, title:"Echo Rally", year:1993, platform:"SNES", genre:"Carreras", price:11.99, image:"img/pixel-29.png", description:"Rally retro con circuitos técnicos y mucha nitro." },
+  { id:30, title:"Tiny Titans", year:1995, platform:"Game Boy", genre:"Plataformas", price:4.25, image:"img/pixel-30.png", description:"Microaventuras y grandes retos en niveles breves." }
 ];

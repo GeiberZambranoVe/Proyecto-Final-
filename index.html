@@ -1,95 +1,75 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pixel Quest</title>
-  <link rel="icon" type="image/png" href="https://i.imgur.com/8Qh1n8t.png"> <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div id="splash-screen">
-    <h1 class="splash-title">PIXEL QUEST</h1>
-    <div class="loading-bar"></div>
-  </div>
+<!doctype html>
+<main>
+<section class="filters">
+<select id="filter-platform">
+<option value="all">Todas las plataformas</option>
+</select>
+<select id="filter-genre">
+<option value="all">Todos los géneros</option>
+</select>
+</section>
 
-  <header>
-    <div class="brand">
-      <img src="https://i.imgur.com/8Qh1n8t.png" alt="Pixel Quest logo" class="logo"> <h1>Pixel Quest</h1>
-    </div>
-    <nav>
-      <a href="#explorar">EXPLORAR</a>
-      <a href="#biblioteca">BIBLIOTECA</a>
-      <a href="#reseñas">RESEÑAS</a>
-      <a href="#carrito">CARRITO <span id="carrito-count">(0)</span></a>
-      <a href="#estadisticas">STATS</a>
-    </nav>
-  </header>
 
-  <section id="hero">
-    <div class="hero-inner">
-      <h2>¡ES HORA DE LA AVENTURA!</h2>
-      <p>Miles de juegos clásicos y modernos te esperan.</p>
-    </div>
-  </section>
+<section id="games-grid" class="grid"></section>
+</main>
 
-  <main>
-    <section id="explorar">
-      <h2>🕹️ EXPLORAR JUEGOS</h2>
 
-      <div style="margin-bottom: 25px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
-          <input type="text" id="filtro-nombre" placeholder="BUSCAR JUEGO..." style="flex:1; max-width:400px;" onkeyup="filtrarCatalogo()">
-          <select id="filtro-genero" onchange="filtrarCatalogo()" style="max-width:200px;">
-              <option value="todos">TODOS</option>
-              <option value="Acción">ACCIÓN</option>
-              <option value="RPG">RPG</option>
-              <option value="Terror">TERROR</option>
-              <option value="Simulación">SIMULACIÓN</option>
-              <option value="Deportes">DEPORTES</option>
-          </select>
-      </div>
+<!-- Modal de juego -->
+<div id="game-modal" class="modal hidden">
+<div class="modal-content">
+<button class="close-modal">×</button>
+<div class="modal-body">
+<img id="modal-img" src="" alt="">
+<div class="modal-info">
+<h2 id="modal-title"></h2>
+<p id="modal-meta"></p>
+<p id="modal-desc"></p>
+<p class="price" id="modal-price"></p>
+<div class="modal-actions">
+<button id="add-cart">Agregar al carrito</button>
+<button id="toggle-fav">❤ Favorito</button>
+</div>
 
-      <div id="catalogo-completo" class="grid">
-        <p id="loading-message" style="color:var(--main-green)">CARGANDO...</p>
-      </div>
-    </section>
 
-    <section id="biblioteca">
-      <h2>📚 MI BIBLIOTECA</h2>
-      <div id="lista-juegos" class="grid"></div>
-    </section>
+<hr>
+<div class="reviews">
+<h3>Reseñas</h3>
+<form id="review-form">
+<input id="review-name" placeholder="Tu nombre" required />
+<textarea id="review-text" placeholder="Tu reseña" required></textarea>
+<label>Rating: <select id="review-rating"><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></label>
+<button type="submit">Enviar reseña</button>
+</form>
+<ul id="reviews-list"></ul>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-    <section id="reseñas">
-      <h2>⭐ RESEÑAS RECIENTES</h2>
-      <div id="lista-resenas" class="grid"></div>
-    </section>
 
-    <section id="carrito">
-      <h2>🛒 MI CARRITO</h2>
-      <div id="lista-carrito" class="grid"></div>
-      <p id="total" style="font-size:20px; font-weight:700; margin-top:20px; text-shadow:var(--shadow-retro)">TOTAL: $0</p>
-      <button id="comprar-btn" class="primary">FINALIZAR COMPRA</button>
-    </section>
+<!-- Panel carrito -->
+<aside id="cart-panel" class="panel hidden">
+<h3>Carrito</h3>
+<button id="close-cart">Cerrar</button>
+<ul id="cart-items"></ul>
+<div class="cart-footer">
+<p>Total: <span id="cart-total">$0.00</span></p>
+<button id="checkout">Comprar</button>
+<button id="empty-cart">Vaciar carrito</button>
+</div>
+</aside>
 
-    <section id="estadisticas">
-      <h2>📊 ESTADÍSTICAS</h2>
-      <p id="stats">Juegos en biblioteca: 0 | Reseñas: 0 | Compras realizadas: 0</p>
-    </section>
-  </main>
 
-  <footer>
-    <p>© 2025 PIXEL QUEST. PRESS START.</p>
-  </footer>
+<!-- Panel favoritos -->
+<aside id="favs-panel" class="panel hidden">
+<h3>Favoritos</h3>
+<button id="close-favs">Cerrar</button>
+<ul id="favs-list"></ul>
+</aside>
 
-  <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true">
-      <button id="cerrarModal" class="close-btn" aria-label="Cerrar">X</button>
-      <div id="detalle-juego"></div>
-    </div>
-  </div>
 
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+<script src="data.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
